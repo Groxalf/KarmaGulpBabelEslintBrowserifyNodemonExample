@@ -7,6 +7,7 @@ const fs = require('fs');
 const browserify = require('browserify');
 const vinylSource = require('vinyl-source-stream');
 const babelify = require('babelify');
+const eslint = require('gulp-eslint');
 
 const sourceSampleTestFile = 'test/sampleTest.js';
 const distFolder = 'dist/';
@@ -14,7 +15,17 @@ const outputSampleTestFile = 'sampleTest.js';
 const fakeServerFileName = 'app.js';
 const fakeServerPort = '3000';
 
-gulp.task('default', () => {
+gulp.task('default', ['lint', 'build', 'test']);
+
+
+gulp.task('lint', () => {
+	return gulp.src(sourceSampleTestFile)
+		.pipe(eslint())
+		.pipe(eslint.format())
+		.pipe(eslint.failAfterError());
+});
+
+gulp.task('build', ['lint'], () => {
 	return browserify(sourceSampleTestFile)
   		.transform(babelify, {presets: ['es2015']})
   		.bundle()
@@ -22,9 +33,9 @@ gulp.task('default', () => {
   		.pipe(gulp.dest(distFolder));
 });
 
-gulp.task('test', ['default'], () => {
+gulp.task('test', ['lint', 'build'], () => {
 	setUpFakeServer();
-    new karma.Server({
+    return new karma.Server({
         configFile : __dirname + '/karma.conf.js',
         singleRun : true
     }, function() {
