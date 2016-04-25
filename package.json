@@ -6,7 +6,7 @@
     "test": "./node_modules/.bin/gulp test",
     "build": "./node_modules/.bin/gulp build"
   },
-  "author": "",
+  "author": "Miguel Viera",
   "license": "ISC",
   "dependencies": {
     "babel-preset-es2015": "6.6.0",

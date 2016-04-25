@@ -10,7 +10,6 @@ app.use(bodyParser.json());
 
 
 app.get('/', (req, res) => {
-    console.log('BUT WHY');
     res.json({foo : 'bar'})
 });
 
