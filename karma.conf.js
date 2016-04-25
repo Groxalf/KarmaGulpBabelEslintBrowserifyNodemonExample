@@ -1,8 +1,6 @@
 module.exports = function(config) {
   config.set({
 
-    basePath: '',
-
     frameworks: ['jasmine'],
 
     files: [
@@ -14,6 +12,13 @@ module.exports = function(config) {
      'karma-jasmine'
    ],
 
+   customLaunchers: {
+      'PhantomJS_WebSecurityDisabled': {
+        base: 'PhantomJS',
+        flags : ['--web-security=no']
+      }
+    },
+
     reporters: ['progress'],
 
     port: 9876,
@@ -22,12 +27,7 @@ module.exports = function(config) {
 
     logLevel: config.LOG_INFO,
 
-    autoWatch: false,
+    browsers: ['PhantomJS_WebSecurityDisabled']
 
-    browsers: ['PhantomJS'],
-
-    singleRun: false,
-
-    concurrency: Infinity
   })
 }

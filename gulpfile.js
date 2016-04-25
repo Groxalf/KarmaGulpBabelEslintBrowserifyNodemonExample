@@ -33,13 +33,14 @@ gulp.task('build', ['lint'], () => {
   		.pipe(gulp.dest(distFolder));
 });
 
-gulp.task('test', ['lint', 'build'], () => {
+gulp.task('test', ['lint', 'build'], (done) => {
 	setUpFakeServer();
     return new karma.Server({
         configFile : __dirname + '/karma.conf.js',
         singleRun : true
     }, function() {
-        nodemon.emit('quit');
+        done();
+		nodemon.emit('quit');
     }).start();
 });
 
